@@ -7,8 +7,10 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from 'expo-router';
 
 const BankAccountScreen = () => {
+  const router = useRouter();
   const [step, setStep] = useState(1);
 
   const [accountNumber, setAccountNumber] = useState("");
@@ -28,6 +30,9 @@ const BankAccountScreen = () => {
       setStep(2);
     } else if (step === 2) {
       setStep(3);
+    } else if (step === 3) {
+  router.push('/Home'); 
+ 
     }
   };
 
@@ -124,6 +129,9 @@ const BankAccountScreen = () => {
           <Text style={styles.successText}>
             Bank Account Linked Successfully!
           </Text>
+          <TouchableOpacity style={styles.button} onPress={goNext}>
+            <Text style={styles.buttonText}>Continue</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -137,7 +145,6 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 40,
   },
-  // 🔹 Progress Indicator
   progressContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

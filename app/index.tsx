@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, StyleSheet, Platform, TouchableOpacity, Modal } from 'react-native';
 import * as Linking from 'expo-linking';
-import { useRouter } from 'expo-router'; 
+import { useRouter } from 'expo-router';
 
 const PhoneVerificationScreen = () => {
-  const router = useRouter(); // 👈 init router
+  const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(5);
@@ -12,7 +12,6 @@ const PhoneVerificationScreen = () => {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const verificationNumber = '15551234567';
-
   const isPhoneNumberValid = phoneNumber.length === 10 && /^\d{10}$/.test(phoneNumber);
 
   const openSMS = () => {
@@ -24,9 +23,9 @@ const PhoneVerificationScreen = () => {
 
     Linking.openURL(url).catch((err) => console.error('Failed to open SMS app:', err));
     setModalVisible(false);
+    router.push('/Bank');   // ✅ matches Bank.tsx
+  // ✅ correct
 
-    // 👇 after SMS, directly go to BankAccountScreen
-    router.replace('/BankAccountScreen');
   };
 
   useEffect(() => {
@@ -125,101 +124,22 @@ const PhoneVerificationScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'stretch',
-    padding: 20,
-    backgroundColor: '#fff',
-    marginTop: 60,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-  },
-  prefix: {
-    fontSize: 16,
-    marginRight: 6,
-    color: '#333',
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    paddingVertical: 10,
-  },
-  clear: {
-    fontSize: 18,
-    color: '#888',
-    paddingHorizontal: 6,
-  },
-  info: {
-    fontSize: 12,
-    color: '#555',
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 14,
-    borderRadius: 6,
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  buttonDisabled: {
-    backgroundColor: '#ccc',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalView: {
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    maxHeight: '50%',
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  modalText: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  messagePreview: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#007AFF',
-    marginBottom: 20,
-  },
-  autoText: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 10,
-  },
+  container: { flex: 1, alignItems: 'stretch', padding: 20, backgroundColor: '#fff', marginTop: 60 },
+  title: { fontSize: 20, fontWeight: '600', marginBottom: 20 },
+  inputContainer: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 10, marginBottom: 10 },
+  prefix: { fontSize: 16, marginRight: 6, color: '#333' },
+  input: { flex: 1, fontSize: 16, paddingVertical: 10 },
+  clear: { fontSize: 18, color: '#888', paddingHorizontal: 6 },
+  info: { fontSize: 12, color: '#555', marginBottom: 20 },
+  button: { backgroundColor: '#007AFF', paddingVertical: 14, borderRadius: 6, alignItems: 'center', marginBottom: 10 },
+  buttonDisabled: { backgroundColor: '#ccc' },
+  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  modalContainer: { flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0, 0, 0, 0.5)' },
+  modalView: { backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, alignItems: 'center' },
+  modalTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
+  modalText: { fontSize: 16, textAlign: 'center', marginBottom: 10 },
+  messagePreview: { fontSize: 16, fontWeight: 'bold', color: '#007AFF', marginBottom: 20 },
+  autoText: { fontSize: 14, color: '#666', marginTop: 10 },
 });
 
 export default PhoneVerificationScreen;
